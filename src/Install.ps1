@@ -52,7 +52,7 @@ switch ($Selection) {
     }
     "3" {
         # Abbrechen-Logik
-        Write-Host "Vorgang wurde abgebrochen."
+        Write-Host "Vorgang durch den Benutzer abgebrochen." -ForegroundColor Red
         exit
     }
     default {

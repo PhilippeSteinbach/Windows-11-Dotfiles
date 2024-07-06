@@ -27,7 +27,7 @@ function CheckForNewVersion {
     }
 }
 
-function UpdateScript {
+function Update-Dotfiles {
     param (
         [string]$GitHubRepositoryAuthor,
         [string]$GitHubRepositoryName,

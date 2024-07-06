@@ -22,20 +22,12 @@ $ConfigureWindowsPath = Join-Path -Path $DotfilesWorkFolder -ChildPath "Windows"
 Write-Host "Wähle eine Option:"
 Write-Host "1: Installieren"
 Write-Host "2: Dotfiles Update (prüfe ob dotfiles aktuell sind)"
+Write-Host "3: Abbrechen"
 $Selection = Read-Host "Bitte geben Sie die Nummer der gewünschten Aktion ein"
 
 switch ($Selection) {
     "1"{
         # Installationslogik
-
-        # # Kopiere Dotfiles in das Home-Verzeichnis
-        # $DotfilesCopySuccess = Copy-Dotfiles -SourceFolder $PSScriptRoot -DotfilesFolder $DotfilesFolder
-        # if ($DotfilesCopySuccess -eq $true) {
-        #     $DotfilesExists = $true
-        # } else {
-        #     Write-Host "Das Skript wurde abgebrochen."
-        #     exit
-        # }
 
         # Installiere Apps
         Invoke-Expression -Command "$InstallAppsPath\InstallApps.ps1"
@@ -57,6 +49,11 @@ switch ($Selection) {
             exit
         }
         
+    }
+    "3" {
+        # Abbrechen-Logik
+        Write-Host "Vorgang wurde abgebrochen."
+        exit
     }
     default {
         Write-Host "Ungültige Eingabe. Bitte starte das Skript neu und wähle eine gültige Option."

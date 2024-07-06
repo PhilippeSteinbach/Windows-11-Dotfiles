@@ -22,11 +22,21 @@ $DotfilesWorkFolder = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubReposi
 
 $DownloadResult = $FALSE
 
-# Create Dotfiles folder
+# Check if Dotfiles folder exists and is not empty
 if (Test-Path $DotfilesFolder) {
-  Remove-Item -Path $DotfilesFolder -Recurse -Force
+  if ((Get-ChildItem -Path $DotfilesFolder).Count -gt 0) {
+    $UserConfirmation = Read-Host "Der Dotfiles-Ordner existiert bereits und ist nicht leer. Möchten Sie ihn überschreiben und fortfahren? (J/N)"
+    if ($UserConfirmation -ne 'J') {
+      Write-Host "Vorgang durch den Benutzer abgebrochen." -ForegroundColor Red
+      exit
+    } else {
+      Remove-Item -Path $DotfilesFolder -Recurse -Force
+      New-Item $DotfilesFolder -ItemType directory
+    }
+  }
+} else {
+  New-Item $DotfilesFolder -ItemType directory
 }
-New-Item $DotfilesFolder -ItemType directory
 
 # Download Dotfiles repository as Zip
 Try {
@@ -34,11 +44,12 @@ Try {
   $DownloadResult = $TRUE
 }
 catch [System.Net.WebException] {
-  Write-Host "Fehler beim Herunterladen des Dotfiles-Repositorys" -ForegroundColor "Red"
+  Write-Host "Fehler beim Herunterladen des Dotfiles-Repositorys" -ForegroundColor Red
 }
 
 if ($DownloadResult) {
   Add-Type -AssemblyName System.IO.Compression.FileSystem
   [System.IO.Compression.ZipFile]::ExtractToDirectory($ZipRepositoryFile, $DotfilesFolder)
+  Remove-Item -Path $ZipRepositoryFile -Force
   Invoke-Expression (Join-Path -Path $DotfilesWorkFolder -ChildPath "Install.ps1")
 }

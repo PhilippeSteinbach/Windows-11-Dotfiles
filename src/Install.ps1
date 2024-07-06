@@ -28,14 +28,14 @@ switch ($Selection) {
     "1"{
         # Installationslogik
 
-        # Kopiere Dotfiles in das Home-Verzeichnis
-        $DotfilesCopySuccess = Copy-Dotfiles -SourceFolder $PSScriptRoot -DotfilesFolder $DotfilesFolder
-        if ($DotfilesCopySuccess -eq $true) {
-            $DotfilesExists = $true
-        } else {
-            Write-Host "Das Skript wurde abgebrochen."
-            exit
-        }
+        # # Kopiere Dotfiles in das Home-Verzeichnis
+        # $DotfilesCopySuccess = Copy-Dotfiles -SourceFolder $PSScriptRoot -DotfilesFolder $DotfilesFolder
+        # if ($DotfilesCopySuccess -eq $true) {
+        #     $DotfilesExists = $true
+        # } else {
+        #     Write-Host "Das Skript wurde abgebrochen."
+        #     exit
+        # }
 
         # Installiere Apps
         Invoke-Expression -Command "$InstallAppsPath\InstallApps.ps1"

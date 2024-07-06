@@ -73,5 +73,8 @@ Try {
 }
 
 if ($DownloadResult) {
+  Add-Type -AssemblyName System.IO.Compression.FileSystem
+  [System.IO.Compression.ZipFile]::ExtractToDirectory($ZipRepositoryFile, $DotfilesFolder)
+  Remove-Item -Path $ZipRepositoryFile -Force
   Invoke-Expression (Join-Path -Path $DotfilesWorkFolder -ChildPath "Install.ps1")
 }

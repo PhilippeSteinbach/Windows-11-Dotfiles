@@ -9,13 +9,23 @@ $GitHubRepositoryName = "Windows-11-Dotfiles"
 $DotfilesFolder = Join-Path -Path $HOME -ChildPath ".dotfiles";
 $DotfilesExists = Test-Path -Path $DotfilesFolder;
 $DotfilesWorkFolder = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubRepositoryName}-main" | Join-Path -ChildPath "src" 
-$HelperPath = Join-Path -Path $DotfilesWorkFolder -ChildPath "Helper";
+$DotfilesConfigFile = Join-Path -Path $DotfilesFolder -ChildPath "config.json";
+$DotfilesHelpersFolder = Join-Path -Path $DotfilesWorkFolder -ChildPath "Helper";
 
-. Join-Path -Path $HelperPath -ChildPath "CopyDotfiles.ps1";
-. Join-Path -Path $HelperPath -ChildPath "UpdateDotfiles.ps1";
+# Lade Hilfsfunktionen
+Write-Host "Lade Hilfsfunktionen..." -ForegroundColor "Green";
+$DotfilesHelpers = Get-ChildItem -Path "${DotfilesHelpersFolder}\*" -Include *.ps1 -Recurse;
+foreach ($DotfilesHelper in $DotfilesHelpers) {
+  . $DotfilesHelper;
+};
+
+# Speichere Konfiguration
+Set-Configuration-File -DotfilesConfigFile $DotfilesConfigFile -ComputerName $ComputerName -GitUserName $GitUserName -GitUserEmail $GitUserEmail -WorkspaceDisk $WorkspaceDisk;
+
+# Laden der Konfiguration
+$Config = Get-Configuration-File -DotfilesConfigFile $DotfilesConfigFile;
 
 $InstallAppsPath = Join-Path -Path $DotfilesWorkFolder -ChildPath "Apps";
-$ConfigureAppsPath = Join-Path -Path $DotfilesWorkFolder -ChildPath "Configs";
 $ConfigureWindowsPath = Join-Path -Path $DotfilesWorkFolder -ChildPath "Windows";
 
 # Auswahl anzeigen
@@ -31,9 +41,6 @@ switch ($Selection) {
 
         # Installiere Apps
         Invoke-Expression -Command "$InstallAppsPath\InstallApps.ps1"
-
-        # Konfiguriere Apps
-        Invoke-Expression -Command "$ConfigureAppsPath\ApplyAppConfigs.ps1"
 
         # Konfiguriere Windows
         Invoke-Expression -Command "$ConfigureWindowsPath\ConfigureWindows.ps1"

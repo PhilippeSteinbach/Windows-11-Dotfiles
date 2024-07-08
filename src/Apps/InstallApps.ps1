@@ -1,3 +1,7 @@
+$DotfilesFolder = Join-Path -Path $HOME -ChildPath ".dotfiles";
+$DotfilesWorkFolder = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubRepositoryName}-main" | Join-Path -ChildPath "src" 
+$DotfilesHelpersFolder = Join-Path -Path $DotfilesWorkFolder -ChildPath "Helper";
+
 $FakeLoaingBarScriptPath = Join-Path -Path $DotfilesHelpersFolder -ChildPath "FakeLoadingBar.ps1";
 . $FakeLoaingBarScriptPath
 

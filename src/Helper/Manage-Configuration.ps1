@@ -23,18 +23,23 @@ function Set-Configuration-File {
     )
 
     $Config = @{
-        ComputerName = $ComputerName;
-        GitUserName = $GitUserName;
-        GitUserEmail = $GitUserEmail;
+        ComputerName  = $ComputerName;
+        GitUserName   = $GitUserName;
+        GitUserEmail  = $GitUserEmail;
         WorkspaceDisk = $WorkspaceDisk;
     }
 
-    if (-not (Test-Path -Path $DotfilesConfigFile)) {
-        Write-Host "Erstelle Dotfiles-Konfigurationsdatei..." -ForegroundColor "Green";
-
-        $Config | ConvertTo-Json | Set-Content -Path $DotfilesConfigFile;
-
-        Write-Host "Dotfiles-Konfigurationsdatei wurde erstellt." -ForegroundColor "Green";
+    try {
+        if (-not (Test-Path -Path $DotfilesConfigFile)) {
+            Write-Host "Erstelle Dotfiles-Konfigurationsdatei..." -ForegroundColor "Green";
+    
+            $Config | ConvertTo-Json | Set-Content -Path $DotfilesConfigFile;
+    
+            Write-Host "Dotfiles-Konfigurationsdatei wurde erstellt." -ForegroundColor "Green";
+        }
+    }
+    catch {
+        Write-Error "Failed to read or parse the configuration file: $_"
     }
 }
 
@@ -46,17 +51,22 @@ function Get-Configuration-File {
         $DotfilesConfigFile
     )
 
-    $Config = {}
-    $ConfigContent = Get-Content -Path $DotfilesConfigFile -Raw | ConvertFrom-Json;
+    try {
+        $Config = @{};
+        $ConfigContent = Get-Content -Path $DotfilesConfigFile -Raw | ConvertFrom-Json;
 
-    Write-Host "Lese Dotfiles-Konfigurationsdatei..." -ForegroundColor "Green";
+        Write-Host "Lese Dotfiles-Konfigurationsdatei..." -ForegroundColor "Green";
 
-    foreach ($Property in $ConfigContent.PSObject.Properties) {
-        $Config[$Property.Name] = $Property.Value;
+        foreach ($Property in $ConfigContent.PSObject.Properties) {
+            $Config[$Property.Name] = $Property.Value;
+        }
+
+        Write-Host "config.json enthält folgende Werte:" -ForegroundColor "Green";
+        Write-Host -ForegroundColor "Green" ($Config | Format-List | Out-String);
+
+        return $Config;
     }
-
-    Write-Host "config.json enthält folgende Werte:" -ForegroundColor "Green";
-    Write-Host -ForegroundColor "Green" ($Config | Format-List | Out-String);
-
-    return $Config;
+    catch {
+        Write-Error "Failed to read or parse the configuration file: $_"
+    }
 }

@@ -16,5 +16,5 @@ function Set-Workspace-Folder-Ubuntu {
     }
 }
 
-Set-Workspace-Folder-Windows;
-Set-Workspace-Folder-Ubuntu;
+# Set-Workspace-Folder-Windows;
+# Set-Workspace-Folder-Ubuntu;

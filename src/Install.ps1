@@ -19,6 +19,20 @@ foreach ($DotfilesHelper in $DotfilesHelpers) {
   . $DotfilesHelper;
 };
 
+# Request custom values
+$ComputerName = Read-Host -Prompt "Gib deinen Computernamen ein"
+$GitUserName = Read-Host -Prompt "Gib deinen Git-Benutzernamen hier ein"
+$GitUserEmail = Read-Host -Prompt "Gib deine Git-E-Mail-Adresse hier ein"
+
+$ValidDisks = Get-PSDrive -PSProvider "FileSystem" | Select-Object -ExpandProperty "Root"
+do {
+  Write-Host "Wähle ein Laufwerk für die Dotfiles-Installation aus:" -ForegroundColor "Green"
+  Write-Host $ValidDisks -ForegroundColor "Green"
+  $WorkspaceDisk = Read-Host -Prompt "Bitte gib das Laufwerk ein"
+}
+while (-not ($ValidDisks -Contains $WorkspaceDisk))
+
+
 # Speichere Konfiguration
 Set-Configuration-File -DotfilesConfigFile $DotfilesConfigFile -ComputerName $ComputerName -GitUserName $GitUserName -GitUserEmail $GitUserEmail -WorkspaceDisk $WorkspaceDisk;
 

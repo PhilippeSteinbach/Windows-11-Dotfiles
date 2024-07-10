@@ -2,15 +2,17 @@
 # Author: Philippe Steinbach
 
 $ScriptVersion = "0.0.1"
-$GitHubRepositoryAuthor = "PhilippeSteinbach"
-$GitHubRepositoryName = "Windows-11-Dotfiles"
+
+# Initialisiere Umgebungsvariablen
+. .\src\Helper\Initialize-DotfilesEnvironment.ps1
+$envVars = Initialize-DotfilesEnvironment
 
 # Pfade
-$DotfilesFolder = Join-Path -Path $HOME -ChildPath ".dotfiles";
-$DotfilesExists = Test-Path -Path $DotfilesFolder;
-$DotfilesWorkFolder = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubRepositoryName}-main" | Join-Path -ChildPath "src" 
-$DotfilesConfigFile = Join-Path -Path $DotfilesFolder -ChildPath "config.json";
-$DotfilesHelpersFolder = Join-Path -Path $DotfilesWorkFolder -ChildPath "Helper";
+$DotfilesFolder = $envVars.DotfilesFolder
+$DotfilesExists = $envVars.DotfilesExists
+$DotfilesWorkFolder = $envVars.DotfilesWorkFolder
+$DotfilesConfigFile = $envVars.DotfilesConfigFile
+$DotfilesHelpersFolder = $envVars.DotfilesHelpersFolder
 
 # Lade Hilfsfunktionen
 Write-Host "Lade Hilfsfunktionen..." -ForegroundColor "Green";

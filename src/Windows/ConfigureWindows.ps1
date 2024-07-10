@@ -1,8 +1,8 @@
-$DotfilesFolder = Join-Path -Path $HOME -ChildPath ".dotfiles";
-$DotfilesWorkFolder = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubRepositoryName}-main" | Join-Path -ChildPath "src" 
-$DotfilesHelpersFolder = Join-Path -Path $DotfilesWorkFolder -ChildPath "Helper";
+# Initialisiere Umgebungsvariablen
+. .\src\Helper\Initialize-DotfilesEnvironment.ps1
+$envVars = Initialize-DotfilesEnvironment
 
-$FakeLoaingBarScriptPath = Join-Path -Path $DotfilesHelpersFolder -ChildPath "FakeLoadingBar.ps1";
+$FakeLoaingBarScriptPath = Join-Path -Path $envVars.DotfilesHelpersFolder -ChildPath "FakeLoadingBar.ps1";
 . $FakeLoaingBarScriptPath
 
 # Configure Windows

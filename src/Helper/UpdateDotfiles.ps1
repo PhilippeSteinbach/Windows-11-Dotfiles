@@ -47,8 +47,8 @@ function Update-Dotfiles {
             Expand-Archive -Path $tempPath -DestinationPath $tempExtractPath -Force
         }
 
-        $sourceInstallScriptPath = Join-Path -Path $tempExtractPath -ChildPath "${GitHubRepositoryName}-main\install.ps1"
-        $destinationInstallScriptPath = Join-Path -Path $DestinationPath -ChildPath "install.ps1"
+        $sourceInstallScriptPath = Join-Path -Path $tempExtractPath -ChildPath "${GitHubRepositoryName}-main\src\install.ps1"
+        $destinationInstallScriptPath = Join-Path -Path $DestinationPath -ChildPath "\src\install.ps1"
         Copy-Item -Path $sourceInstallScriptPath -Destination $destinationInstallScriptPath -Force
 
         Write-Host "Skript auf die neueste Version aktualisiert. Bitte starten Sie das Skript neu, um die neue Version zu verwenden."

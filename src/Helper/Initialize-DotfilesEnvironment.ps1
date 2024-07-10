@@ -24,6 +24,7 @@ function Initialize-DotfilesEnvironment {
         DotfilesWorkFolder = $DotfilesWorkFolder
         DotfilesConfigFile = $DotfilesConfigFile
         DotfilesHelpersFolder = $DotfilesHelpersFolder
+        MainFolderPath = $MainFolderPath
     }
 
     return New-Object PSObject -Property $envVars

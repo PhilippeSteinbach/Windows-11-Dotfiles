@@ -56,4 +56,3 @@ function Update-Dotfiles {
         Write-Host "Kein Update erforderlich. Sie verwenden bereits die neueste Version."
     }
 }
-

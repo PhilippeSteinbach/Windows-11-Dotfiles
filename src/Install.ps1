@@ -4,7 +4,10 @@
 $ScriptVersion = "0.0.1"
 
 # Initialisiere Umgebungsvariablen
-. .\src\Helper\Initialize-DotfilesEnvironment.ps1
+$DotfilesFolder = Join-Path -Path $HOME -ChildPath ".dotfiles"
+$GitHubRepositoryName = "Windows-11-Dotfiles"
+$InitScriptPath = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubRepositoryName}-main" | Join-Path -ChildPath ".\src\Helper\Initialize-DotfilesEnvironment.ps1"
+. $InitScriptPath
 $envVars = Initialize-DotfilesEnvironment
 
 # Pfade
@@ -13,6 +16,7 @@ $DotfilesExists = $envVars.DotfilesExists
 $DotfilesWorkFolder = $envVars.DotfilesWorkFolder
 $DotfilesConfigFile = $envVars.DotfilesConfigFile
 $DotfilesHelpersFolder = $envVars.DotfilesHelpersFolder
+$MainFolderPath = $envVars.MainFolderPath
 
 # Lade Hilfsfunktionen
 Write-Host "Lade Hilfsfunktionen..." -ForegroundColor "Green";

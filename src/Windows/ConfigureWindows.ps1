@@ -1,5 +1,6 @@
 # Initialisiere Umgebungsvariablen
-. .\src\Helper\Initialize-DotfilesEnvironment.ps1
+$InitScriptPath = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubRepositoryName}-main" | Join-Path -ChildPath ".\src\Helper\Initialize-DotfilesEnvironment.ps1"
+. $InitScriptPath
 $envVars = Initialize-DotfilesEnvironment
 
 $FakeLoaingBarScriptPath = Join-Path -Path $envVars.DotfilesHelpersFolder -ChildPath "FakeLoadingBar.ps1";

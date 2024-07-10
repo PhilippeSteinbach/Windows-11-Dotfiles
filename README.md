@@ -15,11 +15,11 @@ Invoke-Expression (Invoke-RestMethod -Uri "https://raw.githubusercontent.com/${G
 
 
 ```Powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; `
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; `
 .\.dotfiles\Windows-11-Dotfiles-main\Download.ps1
 ```
 
 ```Powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; `
-.\.dotfiles\Windows-11-Dotfiles-main\src\Install.ps1
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; `
+& "$HOME\.dotfiles\Windows-11-Dotfiles-main\src\Install.ps1"
 ```

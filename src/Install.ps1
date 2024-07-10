@@ -1,7 +1,7 @@
 # Description: Hauptskript für die Installation von Dotfiles und Apps
 # Author: Philippe Steinbach
 
-$ScriptVersion = "0.0.1"
+$ScriptVersion = "0.0.2"
 
 # Initialisiere Umgebungsvariablen
 $DotfilesFolder = Join-Path -Path $HOME -ChildPath ".dotfiles"

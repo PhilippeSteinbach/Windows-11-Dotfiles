@@ -1,11 +1,13 @@
 # Description: Hauptskript für die Installation von Dotfiles und Apps
 # Author: Philippe Steinbach
 
-$ScriptVersion = "0.0.2"
+$ScriptVersion = "0.0.1"
 
 # Initialisiere Umgebungsvariablen
 $DotfilesFolder = Join-Path -Path $HOME -ChildPath ".dotfiles"
+$GitHubRepositoryAuthor = "PhilippeSteinbach"
 $GitHubRepositoryName = "Windows-11-Dotfiles"
+
 $InitScriptPath = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubRepositoryName}-main" | Join-Path -ChildPath ".\src\Helper\Initialize-DotfilesEnvironment.ps1"
 . $InitScriptPath
 $envVars = Initialize-DotfilesEnvironment

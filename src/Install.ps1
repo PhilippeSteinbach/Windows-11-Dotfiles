@@ -22,28 +22,9 @@ $MainFolderPath = $envVars.MainFolderPath
 Write-Host "Lade Hilfsfunktionen..." -ForegroundColor "Green";
 $DotfilesHelpers = Get-ChildItem -Path "${DotfilesHelpersFolder}\*" -Include *.ps1 -Recurse;
 foreach ($DotfilesHelper in $DotfilesHelpers) {
-  . $DotfilesHelper;
+    . $DotfilesHelper;
 };
 
-# Request custom values
-$ComputerName = Read-Host -Prompt "Gib deinen Computernamen ein"
-$GitUserName = Read-Host -Prompt "Gib deinen Git-Benutzernamen hier ein"
-$GitUserEmail = Read-Host -Prompt "Gib deine Git-E-Mail-Adresse hier ein"
-
-$ValidDisks = Get-PSDrive -PSProvider "FileSystem" | Select-Object -ExpandProperty "Root"
-do {
-  Write-Host "Wähle ein Laufwerk für die Dotfiles-Installation aus:" -ForegroundColor "Green"
-  Write-Host $ValidDisks -ForegroundColor "Green"
-  $WorkspaceDisk = Read-Host -Prompt "Bitte gib das Laufwerk ein"
-}
-while (-not ($ValidDisks -Contains $WorkspaceDisk))
-
-
-# Speichere Konfiguration
-Set-Configuration-File -DotfilesConfigFile $DotfilesConfigFile -ComputerName $ComputerName -GitUserName $GitUserName -GitUserEmail $GitUserEmail -WorkspaceDisk $WorkspaceDisk;
-
-# Laden der Konfiguration
-$Config = Get-Configuration-File -DotfilesConfigFile $DotfilesConfigFile;
 
 $InstallAppsPath = Join-Path -Path $DotfilesWorkFolder -ChildPath "Apps";
 $ConfigureWindowsPath = Join-Path -Path $DotfilesWorkFolder -ChildPath "Windows";
@@ -56,8 +37,28 @@ Write-Host "3: Abbrechen"
 $Selection = Read-Host "Bitte geben Sie die Nummer der gewünschten Aktion ein"
 
 switch ($Selection) {
-    "1"{
+    "1" {
         # Installationslogik
+        
+        # Request custom values
+        $ComputerName = Read-Host -Prompt "Gib deinen Computernamen ein"
+        $GitUserName = Read-Host -Prompt "Gib deinen Git-Benutzernamen hier ein"
+        $GitUserEmail = Read-Host -Prompt "Gib deine Git-E-Mail-Adresse hier ein"
+
+        $ValidDisks = Get-PSDrive -PSProvider "FileSystem" | Select-Object -ExpandProperty "Root"
+        do {
+            Write-Host "Wähle ein Laufwerk für die Dotfiles-Installation aus:" -ForegroundColor "Green"
+            Write-Host $ValidDisks -ForegroundColor "Green"
+            $WorkspaceDisk = Read-Host -Prompt "Bitte gib das Laufwerk ein"
+        }
+        while (-not ($ValidDisks -Contains $WorkspaceDisk))
+
+
+        # Speichere Konfiguration
+        Set-Configuration-File -DotfilesConfigFile $DotfilesConfigFile -ComputerName $ComputerName -GitUserName $GitUserName -GitUserEmail $GitUserEmail -WorkspaceDisk $WorkspaceDisk;
+
+        # Laden der Konfiguration
+        $Config = Get-Configuration-File -DotfilesConfigFile $DotfilesConfigFile;
 
         # Installiere Apps
         Invoke-Expression -Command "$InstallAppsPath\InstallApps.ps1"
@@ -71,7 +72,8 @@ switch ($Selection) {
         
         if ($DotfilesExists -eq $true) {
             Update-Dotfiles -GitHubRepositoryAuthor $GitHubRepositoryAuthor -GitHubRepositoryName $GitHubRepositoryName -DestinationPath $PSScriptRoot
-        } else {
+        }
+        else {
             Write-Host "Dotfiles sind nicht vorhanden. Bitte installiere sie zuerst."
             exit
         }

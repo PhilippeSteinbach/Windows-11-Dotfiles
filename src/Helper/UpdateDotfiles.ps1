@@ -13,7 +13,7 @@ function CheckForNewVersion {
     $tempExtractPath = Join-Path -Path $env:TEMP -ChildPath "${GitHubRepositoryName}_extract"
     Expand-Archive -Path $tempPath -DestinationPath $tempExtractPath -Force
 
-    $installScriptPath = Join-Path -Path $tempExtractPath -ChildPath "${GitHubRepositoryName}-main\install.ps1"
+    $installScriptPath = Join-Path -Path $tempExtractPath -ChildPath "${GitHubRepositoryName}-main\src\install.ps1"
     $content = Get-Content -Path $installScriptPath
     $content | Where-Object { $_ -match '\$ScriptVersion = "(.*)"' }
     $latestVersion = $matches[1]

@@ -11,4 +11,15 @@ Invoke-Expression (Invoke-RestMethod -Uri "https://raw.githubusercontent.com/${G
 ```
 
 
-# Run existing Install Script
+# Run existing Scripts
+
+
+```Powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; `
+.\.dotfiles\Windows-11-Dotfiles-main\Download.ps1
+```
+
+```Powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; `
+.\.dotfiles\Windows-11-Dotfiles-main\src\Install.ps1
+```

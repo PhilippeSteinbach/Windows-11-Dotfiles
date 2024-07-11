@@ -1,9 +1,6 @@
 function Set-Workspace-Folder-Windows {
     $workspaceFolder = Join-Path -Path $WorkspaceDisk -ChildPath "Workspace";
 
-    Write-Host $WorkspaceDisk;
-    Write-Host $workspaceFolder;
-
     if (-not (Test-Path -Path $workspaceFolder)) {
         Write-Host "Erstelle Windows 11 Workspace-Ordner..." -ForegroundColor "Green";
         New-Item -Path $workspaceFolder -ItemType Directory;

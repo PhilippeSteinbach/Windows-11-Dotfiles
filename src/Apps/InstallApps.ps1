@@ -1,17 +1,14 @@
-# Initialisiere Umgebungsvariablen
-$InitScriptPath = Join-Path -Path $DotfilesFolder -ChildPath "${GitHubRepositoryName}-main" | Join-Path -ChildPath ".\src\Helper\Initialize-DotfilesEnvironment.ps1"
-. $InitScriptPath
-$envVars = Initialize-DotfilesEnvironment
-
 $FakeLoadingBarScriptPath = Join-Path -Path $envVars.DotfilesHelpersFolder -ChildPath "FakeLoadingBar.ps1";
 . $FakeLoadingBarScriptPath
 
 # Setze Workspace-Ordner
-#$WorkspaceFolder = Join-Path -Path $Config.WorkspaceDisk -ChildPath "Workspace";
+Set-Workspace-Folder-Windows;
 
-# Install choco
-Write-Host "Installiere Chocolatey..."
-Show-LoadingBar
+# Installiere Chocolatey
+Invoke-Expression -Command "$InstallAppsPath\Chocolatey\Chocolatey.ps1"
+
+# Installiere Windows Terminal
+# Invoke-Expression -Command "$InstallAppsPath\WindowsTerminal\Install.ps1"
 
 # Install apps
 Write-Host "Installiere Apps..."

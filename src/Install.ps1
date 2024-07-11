@@ -19,6 +19,7 @@ $DotfilesWorkFolder = $envVars.DotfilesWorkFolder
 $DotfilesConfigFile = $envVars.DotfilesConfigFile
 $DotfilesHelpersFolder = $envVars.DotfilesHelpersFolder
 $MainFolderPath = $envVars.MainFolderPath
+$WorkspaceDisk = $envVars.WorkspaceDisk
 
 # Lade Hilfsfunktionen
 Write-Host "Lade Hilfsfunktionen..." -ForegroundColor "Green";

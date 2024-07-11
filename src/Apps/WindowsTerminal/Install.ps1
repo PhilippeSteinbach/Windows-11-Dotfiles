@@ -10,7 +10,7 @@ function Install-WindowsTerminal {
 function Set-WindowsTerminalConfiguration {
     Write-Host "Konfiguriere Windows Terminal..."
     $WindowsTerminalSettingsFilePath = Join-Path -Path $env:LOCALAPPDATA -ChildPath "Packages" | Join-Path -ChildPath "Microsoft.WindowsTerminal_8wekyb3d8bbwe" | Join-Path -ChildPath "LocalState" | Join-Path -ChildPath "settings.json"
-    $DotfilesWindowsTerminalSettingsFilePath = Join-Path -Path $ConfigureAppsPath -ChildPath "WindowsTerminal\settings.json"
+    $DotfilesWindowsTerminalSettingsFilePath = Join-Path -Path $InstallAppsPath -ChildPath "WindowsTerminal\settings.json"
     $WorkspaceFolder = Join-Path -Path $Config.WorkspaceDisk -ChildPath "Workspace";
 
     Write-Host "Kopiere Windows Terminal Konfigurationsdatei..."
@@ -22,8 +22,8 @@ function Set-WindowsTerminalConfiguration {
     $WindowsTerminalSettings = Get-Content -Path $WindowsTerminalSettingsFilePath -Raw | ConvertFrom-Json
     $WindowsTerminalSettings -replace "__STARTING_WINDOWS_DIRECTORY__", ($WorkspaceFolder | ConvertTo-Json) | Set-Content -Path $WindowsTerminalSettingsFilePath;
 
-    $UbuntuStartingDirectory = wsl wslpath -w "~/Workspace";
-    $WindowsTerminalSettings -replace "__STARTING_UBUNTU_DIRECTORY__", ($UbuntuStartingDirectory | ConvertTo-Json) | Set-Content -Path $WindowsTerminalSettingsFilePath;
+    # $UbuntuStartingDirectory = wsl wslpath -w "~/Workspace";
+    # $WindowsTerminalSettings -replace "__STARTING_UBUNTU_DIRECTORY__", ($UbuntuStartingDirectory | ConvertTo-Json) | Set-Content -Path $WindowsTerminalSettingsFilePath;
 
     Write-Host "Windows Terminal wurde erfolgreich konfiguriert." -ForegroundColor "Green"
 }
@@ -37,3 +37,10 @@ function Open-Close-WindowsTerminal {
     Write-Host "Schließe Windows Terminal..." -ForegroundColor "Green"
     Stop-Process -Name "WindowsTerminal" -Force;
 }
+
+Install-WindowsTerminal;
+Set-WindowsTerminalConfiguration;
+
+
+
+# Open-Close-WindowsTerminal;
